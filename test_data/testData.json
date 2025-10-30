@@ -1,0 +1,12 @@
+{
+  "standardUser": "standard_user",
+  "incorrectUser": "user",
+  "lockedUser": "locked_out_user",
+  "problemUser": "problem_user",
+  "performanceUser": "performance_glitch_user",
+  "validPassword": "secret_sauce",
+  "wrongPassword": "secret_sauc",
+  "validFirstName": "First Name",
+  "validLastName": "Last Name",
+  "validPostalCode": "1357EQ"
+}
