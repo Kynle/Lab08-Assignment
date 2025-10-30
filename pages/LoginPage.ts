@@ -38,6 +38,14 @@ export default class LoginPage {
     console.log(errorMessages.lockedOutUser);
   }
 
+  async openMenu() {
+    await this.page.getByRole("button", { name: locators.openMenu }).click();
+  }
+
+  async logout() {
+    await this.page.getByRole("link", { name: locators.logoutBtn }).click();
+  }
+
   async assertProductPage() {
     await expect(this.page.getByText(locators.productsHeader)).toBeVisible();
   }
