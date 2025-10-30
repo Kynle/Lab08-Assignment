@@ -50,3 +50,29 @@ Tests are organized into separate files under the `/tests` directory baed on the
 - `e2e.spec.ts`
 
 The `2.products.spec.ts`, `cart.spec.ts`, `checkout.spec.ts` and `e2e.spec.ts` files utilize a data-driven loop to run the same set of tests against multiple user accounts (`standar_user`, `problem_user`, `performeance_glitch_user`), ensuring comprehensive coverage for different user scenarious.
+
+### Test Flow Overview
+
+1. Login Flow
+
+- Navigate to the login page.
+- Enter valid crendtials.
+- Test invalid crendetials.
+- Assert successful redirection to the inventory page.
+
+2. Product Page
+
+- Dynamically iterate through products.
+- Add visible products to the cart.
+- Verify cart counter updates.
+
+3. Cart Page
+
+- Open the cart and verify the list of added products.
+- Remove selected items and assert the counter decrements.
+- Verify persistence when navigating back via Continue Shopping.
+
+4. Checkout Page
+
+- Validate total and final price accuracy.
+- Include negative test cases such as attempting checkout with an empty cart.
