@@ -8,13 +8,13 @@ export default class CartPage {
   }
 
   async enterCart() {
-    await this.page.locator(locators.cartBtn).getByRole("link").click();
+    await this.page.locator(locators.cartBtn).click();
   }
 
   async calculateCartTotal() {
     const priceElements = this.page
       .locator(locators.cartContainer)
-      .locator(locators.invetoryPrice);
+      .locator(locators.inventoryPrice);
     const count = await priceElements.count();
     let total = 0;
 
@@ -41,7 +41,7 @@ export default class CartPage {
     let removedCount = 0;
 
     for (let i = 0; i < count; i++) {
-      const currentItem = this.page.locator(locators.cartContainerItems).nth(0);
+      const currentItem = this.page.locator(locators.cartContainerItems).nth(i);
       const productLink = currentItem.locator(locators.productTitleLink);
       const removeBtn = this.page.getByRole("button", {
         name: locators.removeItem,
@@ -58,9 +58,8 @@ export default class CartPage {
       await expect(
         this.page.getByRole("button", { name: locators.addItem })
       ).toBeVisible();
-      await this.page
-        .getByRole("button", { name: locators.productBackBtn })
-        .click();
+      await this.page.locator(locators.productBackBtn).click();
+      await this.page.locator('[data-test="shopping-cart-link"]').click();
     }
     await expect(this.page.locator(locators.cartBtn)).toHaveText("");
     console.log(`Removed ${removedCount} products successfully.`);

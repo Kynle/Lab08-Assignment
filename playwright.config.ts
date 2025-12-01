@@ -28,10 +28,10 @@ export default defineConfig({
     /* Base URL to use in actions like `await page.goto('')`. */
     baseURL: "https://www.saucedemo.com",
     headless: true,
-    screenshot: "on",
+    screenshot: "only-on-failure",
     video: "retain-on-failure",
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: "retain-on-failure",
+    trace: "off",
   },
 
   /* Configure projects for major browsers */
@@ -42,13 +42,13 @@ export default defineConfig({
     },
 
     // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
+    //   name: "firefox",
+    //   use: { ...devices["Desktop Firefox"] },
     // },
 
     // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
+    //   name: "webkit",
+    //   use: { ...devices["Desktop Safari"] },
     // },
 
     /* Test against mobile viewports. */

@@ -4,17 +4,21 @@ import { testData, users } from "../utils/dataLoader";
 
 for (const userType of users) {
   test.describe(`Products Page Tests with ${userType}`, () => {
-    test.beforeEach(async ({ loginPage }) => {
+    test.beforeEach(async ({ loginPage, productsPage }) => {
       await loginPage.goto();
       await loginPage.login(userType, testData.validPassword);
     });
 
     test("Adding and Removing all Products on Products Page", async ({
-      page,
+      productsPage,
     }) => {
-      const productPage = new ProductsPage(page);
-      await productPage.addAllItems();
-      await productPage.removeAllItems();
+      await productsPage.addAllItems();
+      await productsPage.removeAllItems();
+    });
+
+    test("check product info", async ({ productsPage }) => {
+      await productsPage.addAllItems();
+      await productsPage.productValues();
     });
 
     test("Inspecting and Adding all Products", async ({ page }) => {

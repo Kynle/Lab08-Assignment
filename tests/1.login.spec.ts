@@ -1,15 +1,12 @@
-import { test } from "@playwright/test";
-import LoginPage from "../pages/LoginPage";
+import { test } from "../fixtures/baseFixture";
 import { testData } from "../utils/dataLoader";
 
-test("Login with standard user", async ({ page }) => {
-  const loginPage = new LoginPage(page);
+test("Login with standard user", async ({ loginPage }) => {
   await loginPage.goto();
   await loginPage.login(testData.standardUser, testData.validPassword);
 });
 
-test("Wrong Creds", async ({ page }) => {
-  const loginPage = new LoginPage(page);
+test("Wrong Creds", async ({ loginPage }) => {
   await loginPage.goto();
   await loginPage.wrongCredentialsLogin(
     testData.standardUser,
@@ -22,8 +19,7 @@ test("Wrong Creds", async ({ page }) => {
   );
 });
 
-test("Locked Out User", async ({ page }) => {
-  const loginPage = new LoginPage(page);
+test("Locked Out User", async ({ loginPage }) => {
   await loginPage.goto();
   await loginPage.lockedOutUserLogin(
     testData.lockedUser,
@@ -31,14 +27,12 @@ test("Locked Out User", async ({ page }) => {
   );
 });
 
-test("Performance user Login", async ({ page }) => {
-  const loginPage = new LoginPage(page);
+test("Performance user Login", async ({ loginPage }) => {
   await loginPage.goto();
   await loginPage.login(testData.performanceUser, testData.validPassword);
 });
 
-test("Problem user Login", async ({ page }) => {
-  const loginPage = new LoginPage(page);
+test("Problem user Login", async ({ loginPage }) => {
   await loginPage.goto();
   await loginPage.login(testData.problemUser, testData.validPassword);
 });

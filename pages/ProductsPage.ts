@@ -11,6 +11,24 @@ export default class ProductsPage {
     await this.page.locator(locators.cartBtn).getByRole("link").click();
   }
 
+  async productValues() {
+    const productCard1 = this.page.locator(locators.inventoryItem);
+    const countProducts = await productCard1.count();
+    let total = 0;
+    for (let i = 0; i < countProducts; i++) {
+      const card = productCard1.nth(i);
+
+      const priceText2 = await card
+        .locator(locators.inventoryPrice)
+        .textContent();
+      const productValue = parseFloat(priceText2!.replace("$", "").trim());
+      console.log(`The price for ${productCard1}: ${productValue}`);
+      total += productValue;
+    }
+    console.log(`the total is ${total}`);
+    return total;
+  }
+
   async addAllItems() {
     const productCards = this.page.locator(locators.inventoryItem);
     const count = await productCards.count();
@@ -83,7 +101,7 @@ export default class ProductsPage {
 
   async filterByPriceLow() {
     await this.page.getByRole("combobox").selectOption(locators.filterLoHi);
-    const prices = await this.page.$$eval(locators.invetoryPrice, (els) =>
+    const prices = await this.page.$$eval(locators.inventoryPrice, (els) =>
       els.map((el) => +el.textContent!.replace("$", ""))
     );
     expect(prices).toEqual([...prices].sort((a, b) => a - b));
@@ -91,7 +109,7 @@ export default class ProductsPage {
 
   async filterByPriceHigh() {
     await this.page.getByRole("combobox").selectOption(locators.filterHiLo);
-    const prices = await this.page.$$eval(locators.invetoryPrice, (els) =>
+    const prices = await this.page.$$eval(locators.inventoryPrice, (els) =>
       els.map((el) => +el.textContent!.replace("$", ""))
     );
     expect(prices).toEqual([...prices].sort((a, b) => b - a));
@@ -119,18 +137,16 @@ export default class ProductsPage {
     let total = 0;
     for (let i = 0; i < countProducts; i++) {
       const card = productCards.nth(i);
-      const button = card.getByRole("button");
-
-      const buttonText = await button.textContent();
-
-      if (buttonText?.includes("REMOVE")) {
+      const removeButton = card.getByRole("button", {
+        name: locators.removeItem,
+      });
+      if (await removeButton.isVisible()) {
         const priceText = await card
-          .locator(locators.invetoryPrice)
+          .locator(locators.inventoryPrice)
           .textContent();
-        if (priceText) {
-          const priceValue = parseFloat(priceText.replace("$", "").trim());
-          total += priceValue;
-        }
+
+        const priceValue = parseFloat(priceText!.replace("$", "").trim());
+        total += priceValue;
       }
     }
     console.log(

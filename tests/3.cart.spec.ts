@@ -1,5 +1,4 @@
 import { test, expect } from "../fixtures/baseFixture";
-import CartPage from "../pages/CartPage";
 import { testData, users } from "../utils/dataLoader";
 
 for (const userType of users) {

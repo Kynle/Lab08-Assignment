@@ -3,6 +3,7 @@ import LoginPage from "../pages/LoginPage";
 import ProductsPage from "../pages/ProductsPage";
 import CartPage from "../pages/CartPage";
 import CheckoutPage from "../pages/CheckoutPage";
+import { errorMessages, testData } from "../utils/dataLoader";
 
 type MyFixture = {
   loginPage: LoginPage;
@@ -12,25 +13,27 @@ type MyFixture = {
   authenticatedUser: Page;
 };
 
-export const test = baseTest.extend<MyFixture>({
-  loginPage: async ({ page }, use) => {
-    const loginPage = new LoginPage(page);
-    await use(loginPage);
+type dataFixtgure = {
+  testData: typeof import("../test_data/testData.json");
+  errorMessage: typeof import("../locators/errorMessages.json");
+};
+
+export const test = baseTest.extend<MyFixture & dataFixtgure>({
+  loginPage: async ({ page }, use) => use(new LoginPage(page)),
+
+  productsPage: async ({ page }, use) => use(new ProductsPage(page)),
+
+  cartPage: async ({ page }, use) => use(new CartPage(page)),
+
+  checkoutPage: async ({ page }, use) => use(new CheckoutPage(page)),
+
+  authenticatedUser: async ({ page }, use) => use(page),
+
+  testData: async ({}, use) => {
+    await use(testData);
   },
-  productsPage: async ({ page }, use) => {
-    const productsPage = new ProductsPage(page);
-    await use(productsPage);
-  },
-  cartPage: async ({ page }, use) => {
-    const cartPage = new CartPage(page);
-    await use(cartPage);
-  },
-  checkoutPage: async ({ page }, use) => {
-    const checkoutPage = new CheckoutPage(page);
-    await use(checkoutPage);
-  },
-  authenticatedUser: async ({ page }, use) => {
-    await use(page);
+  errorMessage: async ({}, use) => {
+    await use(errorMessages);
   },
 });
 

@@ -3,7 +3,7 @@ import { testData, users } from "../utils/dataLoader";
 
 for (const userType of users) {
   test.describe(`Checkout Tests with ${userType}`, () => {
-    test.beforeEach(async ({ loginPage, productsPage, cartPage }) => {
+    test.beforeEach(async ({ loginPage }) => {
       await loginPage.goto();
       await loginPage.login(userType, testData.validPassword);
     });
